@@ -27,5 +27,10 @@ namespace Orleans.Providers.MongoDB.Test.Grains
             await ReadStateAsync();
             return State.Level;
         }
+
+        public Task SetLevels(int[] levels)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

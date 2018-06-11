@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 using Orleans.Configuration;
 using Orleans.Providers.MongoDB.Test.GrainInterfaces;
@@ -10,6 +11,7 @@ namespace Orleans.Providers.MongoDB.Test.Client
         public static void Main(string[] args)
         {
             var client = new ClientBuilder()
+                .ConfigureDefaults()
                 .ConfigureApplicationParts(options =>
                 {
                     options.AddApplicationPart(typeof(IHelloWorldGrain).Assembly);
@@ -21,7 +23,7 @@ namespace Orleans.Providers.MongoDB.Test.Client
                 .Configure<ClusterOptions>(options => options.ClusterId = "helloworldcluster")
                 .ConfigureLogging(logging => logging.AddConsole())
                 .Build();
-
+            Thread.Sleep(10000);
             client.Connect().Wait();
 
             // get a reference to the grain from the grain factory
@@ -50,7 +52,7 @@ namespace Orleans.Providers.MongoDB.Test.Client
             }
 
             employeeId = employee.ReturnLevel().Result;
-            
+
             Console.WriteLine(employeeId);
             Console.ReadKey();
         }
