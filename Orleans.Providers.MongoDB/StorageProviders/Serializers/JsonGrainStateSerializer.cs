@@ -12,15 +12,13 @@ namespace Orleans.Providers.MongoDB.StorageProviders.Serializers
         public JsonGrainStateSerializer(ITypeResolver typeResolver, IGrainFactory grainFactory)
             : this(JsonSerializer.Create(OrleansJsonSerializer.GetDefaultSerializerSettings(typeResolver, grainFactory)))
         {
+
         }
 
         protected JsonGrainStateSerializer(JsonSerializer serializer)
         {
             this.serializer = serializer;
-
-            // https://github.com/OrleansContrib/Orleans.Providers.MongoDB/issues/44
-            this.serializer.NullValueHandling = NullValueHandling.Include;
-            this.serializer.DefaultValueHandling = DefaultValueHandling.Populate;
+            this.serializer.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
         }
 
         public void Deserialize(IGrainState grainState, JObject entityData)
