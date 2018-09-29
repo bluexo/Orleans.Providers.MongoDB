@@ -7,5 +7,7 @@ namespace Orleans.Providers.MongoDB.Test.GrainInterfaces
         Task SetLevel(int level);
 
         Task<int> ReturnLevel();
+
+        Task SetLevels(int[] levels);
     }
 }
